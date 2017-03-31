@@ -46,7 +46,7 @@ Modify configuration file `~/.cow/rc` (OS X or Linux) or `rc.txt` (Windows). A s
 
 See [detailed configuration example](doc/sample-config/rc-en) for other features.
 
-The PAC file can be accessed at `http://<listen>/pac`, for the above example: `http://127.0.0.1:7777/pac`.
+The PAC file can be accessed at `http://<listen>/proxy.pac`, for the above example: `http://127.0.0.1:7777/proxy.pac`.
 
 Command line options can override options in the configuration file For more details, see the output of `cow -h`
 

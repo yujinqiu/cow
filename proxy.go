@@ -161,12 +161,12 @@ func (hp *httpProxy) Serve(wg *sync.WaitGroup, quit <-chan struct{}) {
 	host, _, _ := net.SplitHostPort(hp.addr)
 	var pacURL string
 	if hp.addrInPAC != "" {
-		pacURL = fmt.Sprintf("http://%s/pac", hp.addrInPAC)
+		pacURL = fmt.Sprintf("http://%s/proxy.pac", hp.addrInPAC)
 	} else {
 		if host == "" || host == "0.0.0.0" {
-			pacURL = fmt.Sprintf("http://<hostip>:%s/pac", hp.port)
+			pacURL = fmt.Sprintf("http://<hostip>:%s/proxy.pac", hp.port)
 		} else {
-			pacURL = fmt.Sprintf("http://%s/pac", hp.addr)
+			pacURL = fmt.Sprintf("http://%s/proxy.pac", hp.addr)
 		}
 	}
 	info.Printf("COW %s listen http %s, PAC url %s\n", version, hp.addr, pacURL)
@@ -363,7 +363,7 @@ func (c *clientConn) serveSelfURL(r *Request) (err error) {
 	if r.Method != "GET" {
 		goto end
 	}
-	if r.URL.Path == "/pac" || strings.HasPrefix(r.URL.Path, "/pac?") {
+	if r.URL.Path == "/pac" || r.URL.Path == "proxy.pac" || strings.HasPrefix(r.URL.Path, "/pac?") {
 		sendPAC(c)
 		// PAC header contains connection close, send non nil error to close
 		// client connection.

@@ -39,7 +39,7 @@ COW 的设计目标是自动化，理想情况下用户无需关心哪些网站�
     # 本地 HTTP 代理地址
     # 配置 HTTP 和 HTTPS 代理时请填入该地址
     # 若配置代理时有对所有协议使用该代理的选项，且你不清楚此选项的含义，请勾选
-    # 或者在自动代理配置中填入 http://127.0.0.1:7777/pac
+    # 或者在自动代理配置中填入 http://127.0.0.1:7777/proxy.pac
     # 如果 cow 部署在负载均衡后面, 需要自定义 PAC 地址(例如: foo.bar.com)如下
     # listen =  http://127.0.0.1:7777  foo.bar.com:7777
     listen = http://127.0.0.1:7777
@@ -73,7 +73,7 @@ COW 的设计目标是自动化，理想情况下用户无需关心哪些网站�
   - 双击 `cow-hide.exe`，隐藏为后台程序执行
   - 以上两者都会启动 `cow.exe`
 
-PAC url 为 `http://<listen address>/pac`，也可将浏览器的 HTTP/HTTPS 代理设置为 `listen address` 使所有网站都通过 COW 访问。
+PAC url 为 `http://<listen address>/proxy.pac`，也可将浏览器的 HTTP/HTTPS 代理设置为 `listen address` 使所有网站都通过 COW 访问。
 
 **使用 PAC 可获得更好的性能，但若 PAC 中某网站从直连变成被封，浏览器会依然尝试直连。遇到这种情况可以暂时不使用 PAC 而总是走 HTTP 代理，让 COW 学习到新的被封网站。**
 
