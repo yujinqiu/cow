@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/cyfdecyf/bufio"
 	"net"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cyfdecyf/bufio"
 )
 
 const CRLF = "\r\n"
@@ -84,7 +85,7 @@ func (r *Request) reset() {
 }
 
 func (r *Request) String() (s string) {
-	return fmt.Sprintf("%s %s%s", r.Method, r.URL.HostPort, r.URL.Path)
+	return fmt.Sprintf("request: %s %s%s, host:%s port:%s domain:%s", r.Method, r.URL.HostPort, r.URL.Path, r.URL.Host, r.URL.Port, r.URL.Domain)
 }
 
 func (r *Request) Verbose() []byte {
@@ -306,9 +307,9 @@ func ParseRequestURIBytes(rawurl []byte) (*URL, error) {
 			port = "443"
 		}
 	}
-        // Fixed wechat image url bug, url like http://[::ffff:183.192.196.102]/mmsns/lVxxxxxx
-        host = strings.TrimSuffix(strings.TrimPrefix(host, "[::ffff:"), "]")
-        hostport = net.JoinHostPort(host, port)
+	// Fixed wechat image url bug, url like http://[::ffff:183.192.196.102]/mmsns/lVxxxxxx
+	host = strings.TrimSuffix(strings.TrimPrefix(host, "[::ffff:"), "]")
+	hostport = net.JoinHostPort(host, port)
 	return &URL{hostport, host, port, host2Domain(host), path}, nil
 }
 
