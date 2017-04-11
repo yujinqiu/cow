@@ -36,6 +36,7 @@ type Header struct {
 	ConnectionKeepAlive bool
 	ExpectContinue      bool
 	Host                string
+	Hop                 int8 // Hop to dectect if packet loopback
 }
 
 type rqState byte
@@ -164,6 +165,10 @@ func (r *Request) genRequestLine() {
 		r.raw.WriteString(r.URL.Path)
 	}
 	r.raw.WriteString(" HTTP/1.1\r\n")
+}
+
+func (r *Request) isLoopback() bool {
+	return r.Header.Hop > 0
 }
 
 type Response struct {

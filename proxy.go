@@ -352,6 +352,10 @@ func isSelfRequest(r *Request) bool {
 	if selfListenAddr[r.URL.Host] {
 		return true
 	}
+	if r.isLoopback() {
+		debug.Printf("request hop more than zero, request itself again %s\n")
+		return true
+	}
 	debug.Printf("fixed request with no host in request line %s\n", r)
 	return false
 }
@@ -1213,6 +1217,7 @@ func (sv *serverConn) doConnect(r *Request, c *clientConn) (err error) {
 }
 
 func (sv *serverConn) sendHTTPProxyRequestHeader(r *Request, c *clientConn) (err error) {
+	r.Header.Hop = r.Header.Hop + 1
 	if _, err = sv.Write(r.proxyRequestLine()); err != nil {
 		return c.handleServerWriteError(r, sv, err,
 			"send proxy request line to http parent")
