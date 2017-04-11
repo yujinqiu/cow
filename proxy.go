@@ -356,7 +356,8 @@ func isSelfRequest(r *Request) bool {
 		debug.Printf("request hop more than zero, request itself again %s\n")
 		return true
 	}
-	debug.Printf("fixed request with no host in request line %s\n", r)
+	r.Header.Hop = r.Header.Hop + 1
+	debug.Printf("fixed request with no host in request line %s. Hop:%d\n", r, r.Header.Hop)
 	return false
 }
 
